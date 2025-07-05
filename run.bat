@@ -1,2 +1,2 @@
 @echo off
-python code\main.py
+python program_files\main.py
