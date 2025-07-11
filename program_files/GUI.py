@@ -5,8 +5,9 @@ import page_generator
 
 class MainWindow:
     def __init__(self):
-        self.filename = None
-        self.main = tk.Tk()
+        self.filename: str | None = None
+        self.page: page_generator.Page = page_generator.Page()
+        self.main: tk.Tk = tk.Tk()
         self.window_width: int = 650
         self.window_height: int = 650
         self.main.geometry("{0}x{1}".format(self.window_width, self.window_height))
@@ -19,23 +20,51 @@ class MainWindow:
         self.add_widgets()
 
     def add_widgets(self):
-        button_pad_x = (0.1462 * self.window_width, 0.1462 * self.window_width)
-        button_pad_y = (0.0346 * self.window_height, 0.0346 * self.window_height)
-        entry_pad_x = (0.0462 * self.window_width, 0.0462 * self.window_width)
-        entry_pad_y = (0.0308 * self.window_height, 0.0308 * self.window_height)
-        big_entry_pad_x = (0.0462 * self.window_width, 0.0462 * self.window_width)
-        big_entry_pad_y = (0.0308 * self.window_height, 0.0308 * self.window_height)
-        combobox_pad_x = (0.0769 * self.window_width, 0.0769 * self.window_width)
-        combobox_pad_y = (0.0308 * self.window_height, 0.0308 * self.window_height)
-        button_choose_file = tk.Button(self.main, text="Wybierz plik", command=None)
-        button_confirm = tk.Button(self.main, text="Wygeneruj", command=None)
-        entry_rows = tk.Entry(self.main)
-        entry_columns = tk.Entry(self.main)
-        entry_color = tk.Entry(self.main)
-        entry_ratio = tk.Entry(self.main)
-        entry_footer = tk.Entry(self.main)
-        combobox_font = ttk.Combobox()
-        combobox_font_size = ttk.Combobox()
+        button_pad_x: tuple[float, float] = (
+            0.1462 * self.window_width,
+            0.1462 * self.window_width,
+        )
+        button_pad_y: tuple[float, float] = (
+            0.0346 * self.window_height,
+            0.0346 * self.window_height,
+        )
+        entry_pad_x: tuple[float, float] = (
+            0.0462 * self.window_width,
+            0.0462 * self.window_width,
+        )
+        entry_pad_y: tuple[float, float] = (
+            0.0308 * self.window_height,
+            0.0308 * self.window_height,
+        )
+        big_entry_pad_x: tuple[float, float] = (
+            0.0462 * self.window_width,
+            0.0462 * self.window_width,
+        )
+        big_entry_pad_y: tuple[float, float] = (
+            0.0308 * self.window_height,
+            0.0308 * self.window_height,
+        )
+        combobox_pad_x: tuple[float, float] = (
+            0.0769 * self.window_width,
+            0.0769 * self.window_width,
+        )
+        combobox_pad_y: tuple[float, float] = (
+            0.0308 * self.window_height,
+            0.0308 * self.window_height,
+        )
+        button_choose_file: tk.Button = tk.Button(
+            self.main, text="Wybierz plik", command=None
+        )
+        button_confirm: tk.Button = tk.Button(
+            self.main, text="Wygeneruj", command=self.page.create
+        )
+        entry_rows: tk.Entry = tk.Entry(self.main)
+        entry_columns: tk.Entry = tk.Entry(self.main)
+        entry_color: tk.Entry = tk.Entry(self.main)
+        entry_ratio: tk.Entry = tk.Entry(self.main)
+        entry_footer: tk.Entry = tk.Entry(self.main)
+        combobox_font: ttk.Combobox = ttk.Combobox()
+        combobox_font_size: ttk.Combobox = ttk.Combobox()
         button_choose_file.grid(
             row=0,
             column=0,
