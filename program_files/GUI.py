@@ -56,7 +56,11 @@ class MainWindow:
             self.main, text="Wybierz plik", command=None
         )
         button_confirm: tk.Button = tk.Button(
-            self.main, text="Wygeneruj", command=self.page.create
+            self.main,
+            text="Wygeneruj",
+            command=lambda: self.page.generate_multiple_pages(
+                5, "3:4", "white", "black", "black", "C:/Users/kozde/Desktop/test.txt"
+            ),
         )
         entry_rows: tk.Entry = tk.Entry(self.main)
         entry_columns: tk.Entry = tk.Entry(self.main)
