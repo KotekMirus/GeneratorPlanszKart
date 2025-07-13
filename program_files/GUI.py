@@ -1,5 +1,6 @@
 import tkinter as tk
-from tkinter import ttk
+from tkinter.filedialog import askopenfilename
+import os
 import page_generator
 
 
@@ -19,7 +20,7 @@ class MainWindow:
             self.main.grid_columnconfigure(i, weight=1)
         self.add_widgets()
 
-    def add_widgets(self):
+    def add_widgets(self) -> None:
         button_pad_x: tuple[float, float] = (
             0.1462 * self.window_width,
             0.1462 * self.window_width,
@@ -37,7 +38,7 @@ class MainWindow:
             0.0308 * self.window_height,
         )
         button_choose_file: tk.Button = tk.Button(
-            self.main, text="Wybierz plik", command=None
+            self.main, text="Wybierz plik", command=self.choose_file
         )
         button_confirm: tk.Button = tk.Button(
             self.main, text="Wygeneruj", command=self.generate_cards_pages
@@ -127,7 +128,7 @@ class MainWindow:
             pady=entry_pad_y,
         )
 
-    def generate_cards_pages(self):
+    def generate_cards_pages(self) -> None:
         self.page.set_font(int(self.entry_font_size.get()))
         self.page.generate_multiple_pages(
             int(self.entry_columns.get()),
@@ -135,8 +136,19 @@ class MainWindow:
             self.entry_color.get(),
             "black",
             self.entry_text_color.get(),
-            "C:/Users/kozde/Desktop/test.txt",
+            self.filename,
         )
 
-    def run(self):
+    def choose_file(self) -> None:
+        desktop_directory: str = os.path.join(
+            os.path.join(os.environ["USERPROFILE"]), "Desktop"
+        )
+        file_path: str = askopenfilename(
+            filetypes=[("Pliki tekstowe", "*.txt")],
+            initialdir=desktop_directory,
+        )
+        if file_path is not None:
+            self.filename = file_path
+
+    def run(self) -> None:
         self.main.mainloop()

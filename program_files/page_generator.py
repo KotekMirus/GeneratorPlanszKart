@@ -12,7 +12,7 @@ class Page:
         )
         self.draw: ImageDraw = ImageDraw.Draw(self.image)
 
-    def set_font(self, font_size):
+    def set_font(self, font_size: int) -> None:
         self.font = ImageFont.truetype("arial.ttf", font_size)
 
     def create_cards(
