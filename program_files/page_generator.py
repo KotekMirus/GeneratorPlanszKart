@@ -7,11 +7,13 @@ class Page:
     def __init__(self) -> None:
         self.page_width: int = 2480
         self.page_height: int = 3508
-        self.font = ImageFont.truetype("arial.ttf", 47)
         self.image: Image = Image.new(
             "RGB", (self.page_width, self.page_height), color="white"
         )
         self.draw: ImageDraw = ImageDraw.Draw(self.image)
+
+    def set_font(self, font_size):
+        self.font = ImageFont.truetype("arial.ttf", font_size)
 
     def create_cards(
         self, columns: int, ratio: str, color: str, border_color: str, text_color: str
