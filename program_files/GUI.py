@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import messagebox
 from tkinter.filedialog import askopenfilename
 import os
 import page_generator
@@ -21,6 +22,7 @@ class MainWindow:
         self.add_widgets()
 
     def add_widgets(self) -> None:
+        font = ("Arial", 25)
         button_pad_x: tuple[float, float] = (
             0.1462 * self.window_width,
             0.1462 * self.window_width,
@@ -38,17 +40,20 @@ class MainWindow:
             0.0308 * self.window_height,
         )
         button_choose_file: tk.Button = tk.Button(
-            self.main, text="Wybierz plik", command=self.choose_file
+            self.main, text="Wybierz plik", font=font, command=self.choose_file
         )
         button_confirm: tk.Button = tk.Button(
-            self.main, text="Wygeneruj", command=self.generate_cards_pages
+            self.main,
+            text="Wygeneruj",
+            font=font,
+            command=self.generate_cards_pages,
         )
-        self.entry_columns: tk.Entry = tk.Entry(self.main)
-        self.entry_ratio: tk.Entry = tk.Entry(self.main)
-        self.entry_footer: tk.Entry = tk.Entry(self.main)
-        self.entry_font_size: tk.Entry = tk.Entry(self.main)
-        self.entry_color: tk.Entry = tk.Entry(self.main)
-        self.entry_text_color: tk.Entry = tk.Entry(self.main)
+        self.entry_columns: tk.Entry = tk.Entry(self.main, font=font)
+        self.entry_ratio: tk.Entry = tk.Entry(self.main, font=font)
+        self.entry_footer: tk.Entry = tk.Entry(self.main, font=font)
+        self.entry_font_size: tk.Entry = tk.Entry(self.main, font=font)
+        self.entry_color: tk.Entry = tk.Entry(self.main, font=font)
+        self.entry_text_color: tk.Entry = tk.Entry(self.main, font=font)
         self.entry_columns.insert(0, "5")
         self.entry_ratio.insert(0, "3:4")
         self.entry_footer.insert(0, "test")
@@ -129,6 +134,9 @@ class MainWindow:
         )
 
     def generate_cards_pages(self) -> None:
+        if self.filename is None:
+            messagebox.showinfo("Brakujące dane", "Nie wybrano pliku z tekstami kart.")
+            return
         self.page.set_font(int(self.entry_font_size.get()))
         self.page.generate_multiple_pages(
             int(self.entry_columns.get()),
@@ -137,6 +145,7 @@ class MainWindow:
             "black",
             self.entry_text_color.get(),
             self.filename,
+            self.entry_footer.get(),
         )
 
     def choose_file(self) -> None:

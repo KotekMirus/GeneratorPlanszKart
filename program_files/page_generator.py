@@ -20,7 +20,7 @@ class Page:
     ) -> bool:
         margin: int = 90
         space: int = 10
-        padding: int = 7
+        padding: int = 9
         width_multiplier: float = 1
         height_multiplier: float = 1
         new_height_multiplier: float = 1
@@ -57,6 +57,14 @@ class Page:
                     (
                         margin + (card_width + space) * column + padding,
                         margin + (card_height + space) * row + padding,
+                    ),
+                )
+                self.add_footer_to_card(
+                    self.footer,
+                    text_color,
+                    (
+                        margin + (card_width + space) * column + padding,
+                        margin + card_height + (card_height + space) * row - padding,
                     ),
                 )
                 if self.texts_count < self.all_texts_number - 1:
@@ -97,6 +105,21 @@ class Page:
             )
             y += line_height
 
+    def add_footer_to_card(
+        self, text: str, text_color: str, down_left_cornet: tuple[int]
+    ) -> None:
+        dummy_img = Image.new("RGB", (self.page_width, self.page_height))
+        draw = ImageDraw.Draw(dummy_img)
+        font = ImageFont.truetype("arial.ttf", 24)
+        ref_bbox: tuple[int] = draw.textbbox((0, 0), "Ay", font=font)
+        line_height: int = ref_bbox[3] - ref_bbox[1]
+        self.draw.text(
+            (down_left_cornet[0], down_left_cornet[1] - line_height),
+            "(c) " + text,
+            font=font,
+            fill=text_color,
+        )
+
     def generate_multiple_pages(
         self,
         columns: int,
@@ -105,11 +128,13 @@ class Page:
         border_color: str,
         text_color: str,
         filename: str,
+        footer: str,
     ) -> None:
         self.all_texts_number: int = 0
         self.all_texts: list[str] = []
         self.all_texts_number, self.all_texts = fh.get_cards_texts(filename)
         self.texts_count: int = 0
+        self.footer: str = footer
         page_count: int = 1
         png_files_list: list[str] = []
         finished: bool = False
