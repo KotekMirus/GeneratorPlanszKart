@@ -1,4 +1,5 @@
 from PIL import Image
+import os
 
 
 def get_cards_texts(filename: str) -> tuple[int, list[str]]:
@@ -9,8 +10,13 @@ def get_cards_texts(filename: str) -> tuple[int, list[str]]:
 
 
 def convert_pngs_to_pdf(png_files_list: list[str]) -> None:
+    directory: str = os.path.dirname(png_files_list[0])
+    if not directory.endswith(os.sep):
+        directory += os.sep
     image_list: list[any] = []
     for png_file in png_files_list:
         img: Image = Image.open(png_file).convert("RGB")
         image_list.append(img)
-    image_list[0].save("cards.pdf", save_all=True, append_images=image_list[1:])
+    image_list[0].save(
+        directory + "cards.pdf", save_all=True, append_images=image_list[1:]
+    )

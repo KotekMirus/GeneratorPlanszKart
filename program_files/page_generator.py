@@ -1,6 +1,7 @@
 from PIL import Image, ImageDraw, ImageFont
 import files_handling as fh
 import math
+import os
 
 
 class Page:
@@ -150,7 +151,10 @@ class Page:
                 border_color,
                 text_color,
             )
-            new_filename = "cards" + str(page_count) + ".png"
+            directory: str = os.path.dirname(filename)
+            if not directory.endswith(os.sep):
+                directory += os.sep
+            new_filename = directory + "cards" + str(page_count) + ".png"
             self.image.save(new_filename)
             png_files_list.append(new_filename)
             page_count += 1

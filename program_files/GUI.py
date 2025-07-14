@@ -56,7 +56,7 @@ class MainWindow:
         self.entry_text_color: tk.Entry = tk.Entry(self.main, font=font)
         self.entry_columns.insert(0, "5")
         self.entry_ratio.insert(0, "3:4")
-        self.entry_footer.insert(0, "test")
+        self.entry_footer.insert(0, "stopka")
         self.entry_font_size.insert(0, "43")
         self.entry_color.insert(0, "white")
         self.entry_text_color.insert(0, "black")
